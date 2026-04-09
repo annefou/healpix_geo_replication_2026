@@ -7,6 +7,7 @@ authors:
     given-names: "Anne"
     orcid: "https://orcid.org/0000-0002-1784-2920"
     affiliation: "LifeWatch ERIC"
+doi: "10.5281/zenodo.19488374"
 repository-code: "https://github.com/annefou/healpix_geo_replication_2026"
 url: "https://github.com/annefou/healpix_geo_replication_2026"
 license: MIT

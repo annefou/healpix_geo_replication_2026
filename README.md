@@ -1,5 +1,6 @@
 # HEALPix-geo Benchmark Replication
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19488374.svg)](https://doi.org/10.5281/zenodo.19488374)
 ![Build Docker Image](https://github.com/annefou/healpix_geo_replication_2026/actions/workflows/docker-build.yml/badge.svg)
 ![Run Replication](https://github.com/annefou/healpix_geo_replication_2026/actions/workflows/run-replication.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -254,7 +255,9 @@ If you use this replication environment, please cite both:
   title={HEALPix-geo Benchmark Replication},
   author={Fouilloux, Anne},
   year={2026},
-  url={https://github.com/annefou/healpix_geo_replication_2026},
+  publisher={Zenodo},
+  doi={10.5281/zenodo.19488374},
+  url={https://doi.org/10.5281/zenodo.19488374},
   note={HEALPix replication of Law \& Ardo (2024) with WGS84 ellipsoid extension}
 }
 ```
