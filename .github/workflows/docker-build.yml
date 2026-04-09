@@ -1,0 +1,98 @@
+# Build and push Docker image to GitHub Container Registry
+#
+# Triggered on:
+# - Push to main branch (relevant files)
+# - New release/tag
+# - Manual trigger
+
+name: Build Docker Image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Dockerfile'
+      - 'requirements.txt'
+      - 'run_healpix_geo_replication.py'
+      - 'run_comparison.py'
+      - 'config.env'
+      - 'entrypoint.sh'
+      - 'reference_h3/**'
+      - '.github/workflows/docker-build.yml'
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      push_image:
+        description: 'Push image to registry'
+        required: false
+        default: 'true'
+        type: boolean
+      no_cache:
+        description: 'Build without cache'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix=
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' && (github.event.inputs.push_image != 'false') }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: ${{ github.event.inputs.no_cache == 'true' && '' || 'type=gha' }}
+          cache-to: type=gha,mode=max
+          no-cache: ${{ github.event.inputs.no_cache == 'true' }}
+
+      - name: Test Docker image
+        run: |
+          docker build -t test-image .
+          echo "=== Testing core imports ==="
+          docker run --rm test-image python -c "
+          import healpix_geo; import geopandas; import numpy
+          print('healpix-geo version:', healpix_geo.__version__ if hasattr(healpix_geo, '__version__') else 'installed')
+          print('Core dependencies OK')
+          "
+          echo ""
+          echo "=== Checking reference H3 data ==="
+          docker run --rm test-image ls -la /app/reference_h3/

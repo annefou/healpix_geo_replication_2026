@@ -1,0 +1,56 @@
+cff-version: 1.2.0
+title: "HEALPix-geo Benchmark Replication"
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+authors:
+  - family-names: "Fouilloux"
+    given-names: "Anne"
+    orcid: "https://orcid.org/0000-0002-1784-2920"
+    affiliation: "LifeWatch ERIC"
+repository-code: "https://github.com/annefou/healpix_geo_replication_2026"
+url: "https://github.com/annefou/healpix_geo_replication_2026"
+license: MIT
+version: "1.0.0"
+date-released: "2026-04-09"
+keywords:
+  - DGGS
+  - discrete global grid system
+  - HEALPix
+  - healpix-geo
+  - WGS84
+  - ellipsoid
+  - reproducibility
+  - replication study
+  - geospatial
+  - benchmark
+  - Earth observation
+abstract: >-
+  A reproducible environment for replicating the DGGS benchmarks from
+  Law & Ardo (2024) using HEALPix indexing via healpix-geo. Extends
+  the original H3-based replication with sphere vs. WGS84 ellipsoid
+  comparison, demonstrating that WGS84 indexing is essential for
+  mid/high-latitude Earth observation data.
+
+references:
+  - type: article
+    title: "Using a discrete global grid system for a scalable, interoperable, and reproducible system of land-use mapping"
+    authors:
+      - family-names: "Law"
+        given-names: "Richard M."
+        orcid: "https://orcid.org/0000-0002-7400-2530"
+      - family-names: "Ardo"
+        given-names: "James"
+        orcid: "https://orcid.org/0009-0008-1201-9733"
+    journal: "Big Earth Data"
+    year: 2024
+    doi: "10.1080/20964471.2024.2429847"
+  - type: software
+    title: "DGGS Benchmark Replication Environment"
+    authors:
+      - family-names: "Fouilloux"
+        given-names: "Anne"
+    repository-code: "https://github.com/annefou/dggs_replication_2026"
+    year: 2026
+  - type: software
+    title: "healpix-geo"
+    repository-code: "https://github.com/EOPF-DGGS/healpix-geo"

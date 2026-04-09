@@ -1,0 +1,102 @@
+# Create Release with Replication Results
+#
+# Triggered manually when ready to publish a new version.
+
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        default: 'false'
+        type: boolean
+      run_benchmarks:
+        description: 'Run benchmarks before release'
+        required: false
+        default: 'true'
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    if: ${{ github.event.inputs.run_benchmarks == 'true' }}
+    uses: ./.github/workflows/run-replication.yml
+    with:
+      benchmark_type: ci-test
+      random_seed: '42'
+
+  release:
+    needs: [benchmark]
+    if: always() && (needs.benchmark.result == 'success' || github.event.inputs.run_benchmarks == 'false')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download benchmark results
+        if: ${{ github.event.inputs.run_benchmarks == 'true' }}
+        uses: actions/download-artifact@v4
+        with:
+          pattern: replication-results-*
+          path: results
+          merge-multiple: true
+
+      - name: Generate release notes
+        run: |
+          cat << 'EOF' > release_notes.md
+          ## HEALPix-geo Benchmark Replication - ${{ github.event.inputs.version }}
+
+          Replication of the DGGS benchmarks from Law & Ardo (2024) using
+          HEALPix indexing via healpix-geo, with sphere vs. WGS84 ellipsoid comparison.
+
+          > DOI: [10.1080/20964471.2024.2429847](https://doi.org/10.1080/20964471.2024.2429847)
+
+          ### What's Included
+
+          - Docker image: `ghcr.io/${{ github.repository }}:${{ github.event.inputs.version }}`
+          - HEALPix-geo benchmark results (sphere + WGS84)
+          - Cross-DGGS comparison against H3 reference
+          - Ellipsoid analysis across latitude bands
+
+          ### Running the Replication
+
+          ```bash
+          docker pull ghcr.io/${{ github.repository }}:${{ github.event.inputs.version }}
+          docker run -v $(pwd)/results:/app/results ghcr.io/${{ github.repository }}:${{ github.event.inputs.version }}
+          ```
+          EOF
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: "HEALPix-geo Replication ${{ github.event.inputs.version }}"
+          body_path: release_notes.md
+          draft: false
+          prerelease: ${{ github.event.inputs.prerelease == 'true' }}
+          files: |
+            results/*.csv
+            results/*.json
+            results/*.png
+            results/*.pdf
+            requirements.txt
+            Dockerfile
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  docker-release:
+    needs: release
+    uses: ./.github/workflows/docker-build.yml
