@@ -809,7 +809,7 @@ def generate_summary(vector_df: pd.DataFrame, raster_df: pd.DataFrame,
                 ratio = raster_df['raster_total'].mean() / raster_df[col].mean()
                 summary["results"][f"raster_{ell}"] = {
                     "raster_healpix_ratio": f"{ratio:.2f}x",
-                    "validated": bool(0.1 < ratio < 10),
+                    "validated": bool(ratio >= 1.0),
                 }
 
     # Ellipsoid analysis
