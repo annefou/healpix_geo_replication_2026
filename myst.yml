@@ -4,6 +4,11 @@ project:
   description: >-
     Replication of the Law & Ardo (2024) discrete-global-grid land-use benchmarks
     on HEALPix via healpix-geo, with a sphere vs WGS84 ellipsoid comparison.
+  authors:
+    - name: Anne Fouilloux
+      orcid: https://orcid.org/0000-0002-1784-2920
+      affiliations:
+        - Lifewatch ERIC
   github: https://github.com/annefou/healpix_geo_replication_2026
   license:
     content: CC-BY-4.0
@@ -12,6 +17,4 @@ project:
     - file: index.md
     - file: notebooks/01_wgs84_matters.ipynb
 site:
-  template: book-theme
-  options:
-    favicon: false
+  title: HEALPix-geo benchmark replication

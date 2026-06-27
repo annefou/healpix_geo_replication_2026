@@ -44,7 +44,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install jupytext jupyterlab ipykernel nbclient mystmd
+          # Pin mystmd to 1.9.1 — 1.10.x regressed on fetching the default
+          # favicon from mystmd.org during `myst build` (ERR_STREAM_PREMATURE_CLOSE).
+          pip install jupytext jupyterlab ipykernel nbclient "mystmd==1.9.1"
 
       - name: Convert .py notebooks to .ipynb
         run: |
