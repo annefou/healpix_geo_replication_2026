@@ -17,3 +17,8 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Jupyter Book build artifacts
+_build/
+notebooks/*.ipynb
+notebooks/*.png
