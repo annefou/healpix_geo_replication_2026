@@ -1,0 +1,17 @@
+version: 1
+project:
+  title: HEALPix-geo benchmark replication
+  description: >-
+    Replication of the Law & Ardo (2024) discrete-global-grid land-use benchmarks
+    on HEALPix via healpix-geo, with a sphere vs WGS84 ellipsoid comparison.
+  github: https://github.com/annefou/healpix_geo_replication_2026
+  license:
+    content: CC-BY-4.0
+    code: MIT
+  toc:
+    - file: index.md
+    - file: notebooks/01_wgs84_matters.ipynb
+site:
+  template: book-theme
+  options:
+    favicon: false

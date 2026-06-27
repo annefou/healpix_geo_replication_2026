@@ -3,9 +3,12 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19488374.svg)](https://doi.org/10.5281/zenodo.19488374)
 ![Build Docker Image](https://github.com/annefou/healpix_geo_replication_2026/actions/workflows/docker-build.yml/badge.svg)
 ![Run Replication](https://github.com/annefou/healpix_geo_replication_2026/actions/workflows/run-replication.yml/badge.svg)
+[![Documentation](https://img.shields.io/badge/docs-Jupyter%20Book-blue)](https://annefou.github.io/healpix_geo_replication_2026/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **Replication study** of the DGGS benchmarks from Law & Ardo (2024) using HEALPix indexing via [`healpix-geo`](https://github.com/EOPF-DGGS/healpix-geo), with sphere vs. WGS84 ellipsoid comparison.
+📖 **Documentation (Jupyter Book):** <https://annefou.github.io/healpix_geo_replication_2026/>
+
+> **Replication study** of the DGGS benchmarks from Law & Ardo (2024) using HEALPix indexing via [`healpix-geo`](https://github.com/GRID4EARTH/healpix-geo), with sphere vs. WGS84 ellipsoid comparison.
 
 This repository provides a **reproducible environment** for replicating the benchmarks from:
 
@@ -230,7 +233,7 @@ The replication runs automatically every Sunday at 00:00 UTC.
 - **Original paper**: Law & Ardo (2024), DOI: [10.1080/20964471.2024.2429847](https://doi.org/10.1080/20964471.2024.2429847)
 - **Original benchmark code**: [dggsBenchmarks v1.1.1](https://github.com/manaakiwhenua/dggsBenchmarks/releases/tag/v1.1.1)
 - **H3 replication study**: [annefou/dggs_replication_2026](https://github.com/annefou/dggs_replication_2026)
-- **healpix-geo library**: [EOPF-DGGS/healpix-geo](https://github.com/EOPF-DGGS/healpix-geo)
+- **healpix-geo library**: [EOPF-DGGS/healpix-geo](https://github.com/GRID4EARTH/healpix-geo)
 
 ---
 
@@ -280,5 +283,5 @@ This replication code is released under the MIT License.
 ## Acknowledgments
 
 - Original research by Richard M. Law and James Ardo at Manaaki Whenua -- Landcare Research
-- [healpix-geo](https://github.com/EOPF-DGGS/healpix-geo) library for WGS84-aware HEALPix indexing
+- [healpix-geo](https://github.com/GRID4EARTH/healpix-geo) library for WGS84-aware HEALPix indexing
 - This replication follows the framework from the [Replication Handbook](https://forrt.org/replication_handbook/)
