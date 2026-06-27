@@ -18,3 +18,7 @@ project:
     - file: notebooks/01_wgs84_matters.ipynb
 site:
   title: HEALPix-geo benchmark replication
+  # Ship a local favicon so the build never fetches the remote default from
+  # mystmd.org (that fetch is fatal when mystmd.org is unreachable).
+  options:
+    favicon: favicon.png
