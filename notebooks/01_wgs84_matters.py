@@ -70,9 +70,10 @@ for lat, frac in rows:
 # bias into any Copernicus-resolution analysis.
 
 # %%
-import matplotlib
-
-matplotlib.use("Agg")
+# Note: do NOT force the Agg backend here. Under nbclient/jupyter-execute the
+# IPython inline backend captures the figure as the cell's display output, which
+# is what MyST renders in the book. Forcing Agg makes plt.show() a no-op, so the
+# figure would only hit disk and never appear on the page.
 import matplotlib.pyplot as plt
 
 lats = [r[0] for r in rows]
@@ -85,5 +86,4 @@ ax.set_ylabel("Points in a different cell (%)")
 ax.set_title(f"Sphere vs WGS84 cell disagreement — HEALPix depth {DEPTH}")
 ax.grid(True, alpha=0.3)
 fig.tight_layout()
-fig.savefig("wgs84_matters.png", dpi=110)
 plt.show()
